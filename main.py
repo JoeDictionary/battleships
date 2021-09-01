@@ -10,8 +10,8 @@ SHOT = 'x'
 class Battleship():
 
     # TODO Move to build method?
-    direction_modifiers = {'N': (0, 1), 'S': (
-        0, -1), 'E': (-1, 0), 'W': (1, 0)}
+    direction_modifiers = {'N': (0, -1), 'S': (
+        0, 1), 'E': (1, 0), 'W': (-1, 0)}
 
     @staticmethod
     def build(head, length, direction):
@@ -25,8 +25,6 @@ class Battleship():
             y_bodypart = (y_head + y_modifier * i)
             body.append((x_bodypart, y_bodypart))
 
-        # body = [(x_head + x_modifier * i, y_head + y_modifier * i)
-        #         for i in range(length)]
         return body
 
     def __init__(self, body):
