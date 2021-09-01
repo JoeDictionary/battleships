@@ -10,8 +10,8 @@ SHOT = 'x'
 class Battleship():
 
     # TODO Move to build method?
-    direction_modifiers = {'N': (0, -1), 'S': (
-        0, 1), 'E': (1, 0), 'W': (-1, 0)}
+    direction_modifiers = {'n': (0, -1), 's': (
+        0, 1), 'e': (1, 0), 'w': (-1, 0)}
 
     @staticmethod
     def build(head, length, direction):
@@ -19,7 +19,6 @@ class Battleship():
         x_modifier, y_modifier = Battleship.direction_modifiers[direction]
         x_head, y_head = head
 
-        # TODO Use loop or list comprehension?
         for i in range(length):
             x_bodypart = (x_head + x_modifier * i)
             y_bodypart = (y_head + y_modifier * i)
@@ -27,8 +26,8 @@ class Battleship():
 
         return body
 
-    def __init__(self, body):
-        self.body = body
+    def __init__(self, head, length, direction):
+        self.body = Battleship.build(head, length, direction)
 
 
 def render_box(width, height, shots):
