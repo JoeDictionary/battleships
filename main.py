@@ -5,6 +5,8 @@ UR_CORNER = '╗'
 DL_CORNER = '╚'
 DR_CORNER = '╝'
 SHOT = 'x'
+EMPTY = ' '
+SHIP_BODY = '█'
 
 
 class Battleship():
@@ -43,8 +45,21 @@ def render_box(width, height, shots):
     print(' ' + DL_CORNER + HORIZONTAL * width + DR_CORNER)
 
 
+def render_battleship(board_width, board_height, ships):
+    board = [[EMPTY for _ in range(board_width)]
+             for _ in range(board_height)]
+
+    for row in board:
+        print(''.join(row))
+
+
 if __name__ == '__main__':
-    shots = []
+    battleships = [Battleship((1, 1), 4, 's'), Battleship((3, 5), 2, 'w')]
+
+    render_battleship(15, 15, battleships)
+
+    exit(0)
+
     # while True:
     #     xstr, ystr = input("Shot coordinates:\n").split(',')
     #     x, y = int(xstr), int(ystr)
