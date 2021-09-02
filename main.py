@@ -5,15 +5,15 @@ UR_CORNER = '╗'
 DL_CORNER = '╚'
 DR_CORNER = '╝'
 SHOT = 'x'
-SHIP_BODY = '█'
-EMPTY = ' '
+EMPTY = '  '
+SHIP_BODY = '██'
 
 
 class Battleship():
 
     # TODO Move to build method?
-    direction_modifiers = {'N': (0, -1), 'S': (
-        0, 1), 'E': (1, 0), 'W': (-1, 0)}
+    direction_modifiers = {'n': (0, -1), 's': (
+        0, 1), 'e': (1, 0), 'w': (-1, 0)}
 
     @staticmethod
     def build(head, length, direction):
@@ -21,14 +21,11 @@ class Battleship():
         x_modifier, y_modifier = Battleship.direction_modifiers[direction]
         x_head, y_head = head
 
-        # TODO Use loop or list comprehension?
         for i in range(length):
             x_bodypart = (x_head + x_modifier * i)
             y_bodypart = (y_head + y_modifier * i)
             body.append((x_bodypart, y_bodypart))
 
-        # body = [(x_head + x_modifier * i, y_head + y_modifier * i)
-        #         for i in range(length)]
         return body
 
     def __init__(self, head, length, direction):
@@ -48,36 +45,28 @@ def render_shots(width, height, shots):
     print(' ' + DL_CORNER + HORIZONTAL * width + DR_CORNER)
 
 
-def render_battleships(board_width, board_height, battleships):
-    print("-------------")
-    # Init empty board
-    board = [[EMPTY for _ in range(board_width)] for _ in range(board_height)]
+def render_battleship(board_width, board_height, ships):
+    board = [[EMPTY for _ in range(board_width)]
+             for _ in range(board_height)]
 
-    for ship in battleships:
-        for x, y in ship.body:
-            board[y][x] = SHIP_BODY
+    for ship in ships:
+        for part in ship.body:
+            board[part[1]][part[0]] = SHIP_BODY
 
     for row in board:
-        print(''.join(row))
-
-    print("-------------")
-
-    # return board
+        print(VERTICAL + ''.join(row) + VERTICAL)
 
 
 if __name__ == '__main__':
+    battleships = [Battleship((1, 1), 4, 's'), Battleship((3, 5), 2, 'w')]
 
-    battleships = [
-        Battleship((1, 1), 4, 'S')
-    ]
-
-    render_battleships(5, 10, battleships)
+    render_battleship(15, 15, battleships)
 
     exit(0)
 
-    shots = []
-    while True:
-        xstr, ystr = input("Shot coordinates:\n").split(',')
-        x, y = int(xstr), int(ystr)
-        shots.append((x, y))
-        render_shots(15, 10, shots)
+    # while True:
+    #     xstr, ystr = input("Shot coordinates:\n").split(',')
+    #     x, y = int(xstr), int(ystr)
+    #     shots.append((x, y))
+    #     render_box(15, 10, shots)
+    print(Battleship.build((1, 1), 4, 'N'))
