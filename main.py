@@ -66,9 +66,9 @@ if __name__ == '__main__':
 
     exit(0)
 
-    # while True:
-    #     xstr, ystr = input("Shot coordinates:\n").split(',')
-    #     x, y = int(xstr), int(ystr)
-    #     shots.append((x, y))
-    #     render_box(15, 10, shots)
+    while True:
+        xstr, ystr = input("Shot coordinates:\n").split(',')
+        x, y = int(xstr), int(ystr)
+        shots.append((x, y))
+        render_box(15, 10, shots)
     print(Battleship.build((1, 1), 4, 'N'))
