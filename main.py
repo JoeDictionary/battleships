@@ -11,6 +11,7 @@ SHOT = 'x'
 
 class Battleship():
 
+    # TODO Use that (dict with modifiers) or if-elif sequence in build method?
     # TODO Move to build method?
     direction_modifiers = {'n': (0, -1), 's': (
         0, 1), 'e': (1, 0), 'w': (-1, 0)}
@@ -30,6 +31,7 @@ class Battleship():
 
     def __init__(self, head, length, direction):
         self.body = Battleship.build(head, length, direction)
+        self.hits = [False] * len(self.body)
 
 
 def render_shots(width, height, shots):
@@ -59,16 +61,46 @@ def render_battleships(board_width, board_height, ships):
     print(SW_CORNER + HORIZONTAL * board_width + SE_CORNER)
 
 
+class Shot():
+    def __init__(self, location, is_hit):
+        self.location = location
+        self.is_hit = is_hit
+
+
+class GameBoard():
+
+    def __init__(self, width, height, battleships=[], shots=[]):
+        self.width = width
+        self.height = height
+        self.battleships = battleships
+        self.shots = shots
+
+    def take_shot(self, shot_location):
+        shot_is_hit = None
+
+        for ship in self.battleships:
+            if shot_location in ship.body:
+                shot_is_hit = True
+                hit_index = ship.body.index(shot_location)
+                ship.hits[hit_index] = False
+            else:
+                shot_is_hit = False
+
+        self.shots.append(Shot(shot_location, shot_is_hit))
+
+
 if __name__ == '__main__':
     battleships = [Battleship((1, 1), 4, 's'), Battleship((3, 5), 2, 'w')]
 
     render_battleships(15, 15, battleships)
+    print(battleships[1].hits)
 
     exit(0)
 
+    shots = []
     while True:
         xstr, ystr = input("Shot coordinates:\n").split(',')
         x, y = int(xstr), int(ystr)
         shots.append((x, y))
-        render_box(15, 10, shots)
+        render_shots(15, 10, shots)
     print(Battleship.build((1, 1), 4, 'N'))
